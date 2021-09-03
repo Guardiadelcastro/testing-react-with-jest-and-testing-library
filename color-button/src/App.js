@@ -1,25 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import * as React from 'react'
+import './App.css'
 
 function App() {
+  const [color, setColor] = React.useState('red')
+  const [disabled, setDisabled] = React.useState(false)
+
+  const getNewButtonColor = (activeColor) =>
+    activeColor === 'red' ? 'blue' : 'red'
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <button
+        disabled={disabled}
+        style={{ backgroundColor: color }}
+        onClick={() => setColor(getNewButtonColor)}
+      >
+        Change to {getNewButtonColor(color)}
+      </button>
+      <label>
+        <input
+          type="checkbox"
+          onChange={(e) => setDisabled(e.target.checked)}
+        />
+        Disable the button
+      </label>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
