@@ -1,6 +1,10 @@
 import * as React from 'react'
 import './App.css'
 
+export function addSpacesBeforeCapitalLetters(text) {
+  return text.replace(/\B([A-Z])\B/g, ' $1')
+}
+
 function App() {
   const [color, setColor] = React.useState('red')
   const [disabled, setDisabled] = React.useState(false)

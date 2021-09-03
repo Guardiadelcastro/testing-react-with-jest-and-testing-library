@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from '@testing-library/react'
-import App from './App'
+import App, { addSpacesBeforeCapitalLetters } from './App'
 
 test('button changes text and color on click', () => {
   render(<App />)
@@ -51,4 +51,18 @@ test('blue button turns to gray when disabled and then to blue again when enable
   expect(buttonElement).toHaveStyle({ backgroundColor: 'gray' })
   fireEvent.click(checkbox)
   expect(buttonElement).toHaveStyle({ backgroundColor: 'blue' })
+})
+
+describe('spaces before came-case capital letters', () => {
+  test('Works for no inner capital letters', () => {
+    expect(addSpacesBeforeCapitalLetters('Red')).toBe('Red')
+  })
+  test('Works for one inner capital letter', () => {
+    expect(addSpacesBeforeCapitalLetters('MidnightBlue')).toBe('Midnight Blue')
+  })
+  test('Works for multiple inner capital letters', () => {
+    expect(addSpacesBeforeCapitalLetters('MediumVioletRed')).toBe(
+      'Medium Violet Red'
+    )
+  })
 })
