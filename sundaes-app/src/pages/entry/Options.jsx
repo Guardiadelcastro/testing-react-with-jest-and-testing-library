@@ -1,6 +1,7 @@
 import * as React from 'react'
 import axios from 'axios'
 import ScoopOption from './ScoopOption'
+import ToppingOption from './ToppingOption'
 import { Row } from 'react-bootstrap'
 
 export default function Options({ optionType }) {
@@ -18,6 +19,7 @@ export default function Options({ optionType }) {
 
   const ItemComponent = {
     scoops: ScoopOption,
+    toppings: ToppingOption,
   }[optionType]
 
   return (
