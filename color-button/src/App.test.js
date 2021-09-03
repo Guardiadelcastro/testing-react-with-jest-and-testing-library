@@ -31,3 +31,24 @@ test('checkbox toggles the disabled attribute on the button', () => {
   expect(checkbox).not.toBeChecked()
   expect(buttonElement).toBeEnabled()
 })
+
+test('button turns to gray when disabled and then to red again when enabled', () => {
+  render(<App />)
+  const buttonElement = screen.getByRole('button', { name: /change to blue/i })
+  const checkbox = screen.getByRole('checkbox', { name: /Disable the button/i })
+  fireEvent.click(checkbox)
+  expect(buttonElement).toHaveStyle({ backgroundColor: 'gray' })
+  fireEvent.click(checkbox)
+  expect(buttonElement).toHaveStyle({ backgroundColor: 'red' })
+})
+
+test('blue button turns to gray when disabled and then to blue again when enabled', () => {
+  render(<App />)
+  const buttonElement = screen.getByRole('button', { name: /change to blue/i })
+  const checkbox = screen.getByRole('checkbox', { name: /Disable the button/i })
+  fireEvent.click(buttonElement)
+  fireEvent.click(checkbox)
+  expect(buttonElement).toHaveStyle({ backgroundColor: 'gray' })
+  fireEvent.click(checkbox)
+  expect(buttonElement).toHaveStyle({ backgroundColor: 'blue' })
+})
