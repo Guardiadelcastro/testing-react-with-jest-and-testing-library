@@ -6,11 +6,11 @@ export function addSpacesBeforeCapitalLetters(text) {
 }
 
 function App() {
-  const [color, setColor] = React.useState('red')
+  const [color, setColor] = React.useState('MediumVioletRed')
   const [disabled, setDisabled] = React.useState(false)
 
   const getNewButtonColor = (activeColor) =>
-    activeColor === 'red' ? 'blue' : 'red'
+    activeColor === 'MediumVioletRed' ? 'MidnightBlue' : 'MediumVioletRed'
 
   return (
     <div>
@@ -19,7 +19,7 @@ function App() {
         style={{ backgroundColor: disabled ? 'gray' : color }}
         onClick={() => setColor(getNewButtonColor)}
       >
-        Change to {getNewButtonColor(color)}
+        Change to {addSpacesBeforeCapitalLetters(getNewButtonColor(color))}
       </button>
       <label>
         <input
