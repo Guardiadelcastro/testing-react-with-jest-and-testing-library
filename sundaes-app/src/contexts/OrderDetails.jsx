@@ -1,14 +1,7 @@
 import * as React from 'react'
 import { createContext } from 'react'
 import { pricePerItem } from '../constants'
-
-function formatCurrency(amount) {
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-    minimumFractionDigits: 2,
-  }).format(amount)
-}
+import { formatCurrency } from '../utils'
 
 const OrderDetails = createContext(undefined)
 
@@ -56,6 +49,12 @@ export function OrderDetailsProvider(props) {
     })
   }, [optionCounts])
 
+  const resetOrder = () => {
+    setOptionCounts({
+      scoops: new Map(),
+      toppings: new Map(),
+    })
+  }
   const value = React.useMemo(() => {
     function updateItemCount(itemName, newItemCount, optionType) {
       const newOptionCounts = { ...optionCounts }
@@ -63,7 +62,8 @@ export function OrderDetailsProvider(props) {
       optionCountsMap.set(itemName, parseInt(newItemCount))
       setOptionCounts(newOptionCounts)
     }
-    return [{ ...optionCounts, totals }, updateItemCount]
+    return [{ ...optionCounts, totals }, updateItemCount, resetOrder]
   }, [optionCounts, totals])
+
   return <OrderDetails.Provider value={value} {...props} />
 }
