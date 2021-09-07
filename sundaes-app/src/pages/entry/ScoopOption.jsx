@@ -2,25 +2,22 @@ import * as React from 'react'
 import { Col, Form, Row } from 'react-bootstrap'
 
 export default function ScoopOption({ name, imagePath, updateItemCount }) {
-  const [isInvalid, setIsInvalid] = React.useState(false)
+  const [isValid, setIsValid] = React.useState(true)
   const handleChange = (event) => {
-    const numberValue = Number(event.target.value)
-    // isInvalid && setIsInvalid(false)
+    const currentValue = event.target.value
 
-    if (!numberValue) {
-      setIsInvalid(true)
-      return
-    }
-    if (numberValue <= 0 || numberValue > 10) {
-      setIsInvalid(true)
-      return
-    }
-    if (!Number.isInteger(numberValue)) {
-      setIsInvalid(true)
-      return
-    }
-    setIsInvalid(false)
-    updateItemCount(name, event.target.value)
+    // make sure we're using a number and not a string to validate
+    const currentValueFloat = parseFloat(currentValue)
+    const valueIsValid =
+      0 <= currentValueFloat &&
+      currentValueFloat <= 10 &&
+      Math.floor(currentValueFloat) === currentValueFloat
+
+    // validate
+    setIsValid(valueIsValid)
+
+    // only update context if the value is valid
+    if (valueIsValid) updateItemCount(name, currentValue)
   }
   return (
     <Col xs={12} sm={6} md={4} lg={3} style={{ textAlign: 'center' }}>
@@ -42,7 +39,7 @@ export default function ScoopOption({ name, imagePath, updateItemCount }) {
             type="number"
             defaultValue={0}
             onChange={handleChange}
-            isInvalid={isInvalid}
+            isInvalid={!isValid}
           />
         </Col>
       </Form.Group>
